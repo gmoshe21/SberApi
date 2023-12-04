@@ -1,0 +1,164 @@
+basePath: /
+definitions:
+  InfoTask:
+    properties:
+      uuid:
+        type: string
+      title:
+        type: string
+      description:
+        type: string
+      data:
+        type: string
+      checking_completion:
+        type: boolean
+  InfoAllTask:
+    properties:
+      uuid:
+        type: string
+      title:
+        type: string
+      checking_completion:
+        type: boolean
+  NewTask:
+    properties:
+      uuid:
+        type: string
+      title:
+        type: string
+      description:
+        type: string
+      data:
+        type: string
+    required:
+    - uuid
+    - title
+    - description
+    - data
+  Task:
+    properties:
+      uuid:
+        type: string
+    required:
+    - uuid
+host: localhost:8000
+info:
+  contact: {}
+  description: API Server for TodoList Application
+  title: Todo App API
+  version: "1.0"
+paths:
+  /task/add_new_task:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: info
+        in: body
+        name: Request body
+        required: true
+        schema:
+          $ref: '#/definitions/NewTask'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+        "500":
+          description: Internal Server Error
+      summary: Create Task
+      tags:
+      - Task
+  /task/update_task:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: info
+        in: body
+        name: Request body
+        required: true
+        schema:
+          $ref: '#/definitions/Task'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+        "500":
+          description: Internal Server Error
+      summary: Change Task
+      tags:
+      - Task
+  /task/delete_task:
+    delete:
+      parameters:
+      - description: info
+        in: body
+        name: Request body
+        required: true
+        schema:
+          $ref: '#/definitions/Task'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+        "500":
+          description: Internal Server Error
+      summary: Delete Task
+      tags:
+      - Task
+  /task/get_info_task:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: info
+        in: body
+        name: Request body
+        required: true
+        schema:
+          $ref: '#/definitions/Task'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+            $ref: '#/definitions/InfoAllTask'
+        "400":
+          description: Bad Request
+        "500":
+          description: Internal Server Error
+      summary: Get info Task
+      tags:
+      - Task
+  /task/get_all_task:
+    get:
+      produces:
+      - application/jsonP
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: array
+            items:
+              type: object
+              $ref: '#/definitions/InfoAllTask'
+        "400":
+          description: Bad Request
+        "500":
+          description: Internal Server Error
+      summary: Get all task
+      tags:
+      - Task
+
+swagger: "2.0"
